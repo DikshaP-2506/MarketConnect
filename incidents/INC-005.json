@@ -1,0 +1,20 @@
+{
+  "id": "INC-005",
+  "title": "Order creation endpoint returns 404 due to route typo",
+  "severity": "P3 - Medium",
+  "service": "backend-api",
+  "reported_by": "Integration Team",
+  "environment": "Development",
+  "timestamp": "2026-03-15T16:20:00Z",
+  "description": "Automated integration tests for order creation are failing with 404 responses. The frontend and tests call /api/order/create, but backend route is registered as /api/orders/create.",
+  "steps_to_reproduce": [
+    "Run integration test suite for order APIs",
+    "Trigger POST /api/order/create",
+    "Observe 404 Not Found response"
+  ],
+  "error_log": "POST /api/order/create 404 3.112 ms - 149\nAssertionError: expected 201 \"Created\", got 404 \"Not Found\"",
+  "expected_behavior": "Order creation endpoint responds with 201 and created order payload",
+  "actual_behavior": "Request hits non-existent path and returns 404",
+  "recent_changes": "Routes were reorganized to plural resource naming without updating all clients",
+  "tags": ["routing", "integration-test", "404", "orders"]
+}

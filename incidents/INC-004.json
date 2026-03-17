@@ -1,0 +1,20 @@
+{
+  "id": "INC-004",
+  "title": "test_payment_flow failing in CI pipeline",
+  "severity": "P2 - High",
+  "service": "python-service",
+  "reported_by": "QA Team",
+  "environment": "CI",
+  "timestamp": "2026-02-28T11:30:00Z",
+  "description": "The test_payment_flow test suite has been failing consistently in the CI pipeline since the last merge. The payment total calculation appears to be incorrect - tax amounts are computed as zero for order subtotals under $100. This is causing incorrect totals in the checkout flow.",
+  "steps_to_reproduce": [
+    "Run: python -m pytest tests/test_payments.py -v",
+    "Observe test_calculate_total_with_tax fails",
+    "Observe test_checkout_flow_complete fails"
+  ],
+  "error_log": "FAILED tests/test_payments.py::TestPaymentFlow::test_calculate_total_with_tax - AssertionError: 49.99 != 54.24\nFAILED tests/test_payments.py::TestPaymentFlow::test_checkout_flow_complete - AssertionError: Order total mismatch",
+  "expected_behavior": "Tax of 8.5% is correctly applied to all order subtotals",
+  "actual_behavior": "Tax calculation returns 0 for subtotals under $100, resulting in incorrect totals",
+  "recent_changes": "Refactored payment calculation logic to use integer arithmetic for precision",
+  "tags": ["test-failure", "payments", "calculation-error"]
+}

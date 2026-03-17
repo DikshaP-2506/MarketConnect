@@ -1,0 +1,20 @@
+{
+  "id": "INC-002",
+  "title": "Vendor dashboard shows empty order list after pagination refactor",
+  "severity": "P3 - Medium",
+  "service": "frontend-react-app",
+  "reported_by": "QA Team",
+  "environment": "Development",
+  "timestamp": "2026-03-12T14:05:00Z",
+  "description": "The vendor dashboard loads successfully, but the order table appears empty even when orders exist. API responses contain data, but the UI maps an incorrect response key after a pagination response shape change.",
+  "steps_to_reproduce": [
+    "Login as a vendor account with existing orders",
+    "Open Vendor Dashboard orders section",
+    "Observe table remains empty despite successful network response"
+  ],
+  "error_log": "TypeError: Cannot read properties of undefined (reading 'map')\n    at VendorDashboard.tsx:118:22",
+  "expected_behavior": "Order table renders items from API response",
+  "actual_behavior": "UI attempts to map response.orders instead of response.data.orders",
+  "recent_changes": "Refactored API layer to normalize paginated responses",
+  "tags": ["frontend", "pagination", "data-mapping", "ui-bug"]
+}

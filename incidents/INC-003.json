@@ -1,0 +1,20 @@
+{
+  "id": "INC-003",
+  "title": "CORS preflight blocked for supplier profile update endpoint",
+  "severity": "P2 - High",
+  "service": "express-api",
+  "reported_by": "Frontend Team",
+  "environment": "Production",
+  "timestamp": "2026-03-14T07:42:00Z",
+  "description": "Updating supplier profile fails from browser clients in production. Preflight OPTIONS request is rejected because the PATCH method is not included in allowed CORS methods.",
+  "steps_to_reproduce": [
+    "Open supplier profile page in production",
+    "Edit profile and click save",
+    "Observe network error and blocked CORS preflight"
+  ],
+  "error_log": "Access to fetch at 'https://api.marketconnect.com/supplier/profile' from origin 'https://app.marketconnect.com' has been blocked by CORS policy: Method PATCH is not allowed by Access-Control-Allow-Methods",
+  "expected_behavior": "PATCH request is allowed and supplier profile updates successfully",
+  "actual_behavior": "Browser blocks request during preflight due to CORS method mismatch",
+  "recent_changes": "Security hardening updated CORS config to explicit allowed methods list",
+  "tags": ["cors", "production", "supplier", "http-patch"]
+}

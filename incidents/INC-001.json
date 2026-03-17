@@ -1,0 +1,20 @@
+{
+  "id": "INC-001",
+  "title": "Login API returns 500 due to missing JWT secret",
+  "severity": "P2 - High",
+  "service": "node-auth-service",
+  "reported_by": "DevOps",
+  "environment": "Staging",
+  "timestamp": "2026-03-10T09:15:00Z",
+  "description": "User login requests are failing with HTTP 500 in staging. The server throws an error when trying to sign the token because JWT_SECRET is undefined in the runtime environment.",
+  "steps_to_reproduce": [
+    "Start backend server in staging config",
+    "POST /api/auth/login with valid credentials",
+    "Observe 500 Internal Server Error response"
+  ],
+  "error_log": "Error: secretOrPrivateKey must have a value\n    at Object.module.exports [as sign] (jsonwebtoken/sign.js:107:20)",
+  "expected_behavior": "Login succeeds and returns a valid JWT token",
+  "actual_behavior": "Login fails with 500 due to missing JWT signing secret",
+  "recent_changes": "Environment variable cleanup removed duplicate secrets from deployment config",
+  "tags": ["auth", "env-config", "staging", "api-failure"]
+}
